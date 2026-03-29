@@ -4,17 +4,32 @@
   "description": "MCP server for audio transcription via OpenRouter",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "or-audio-transcription-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts"
   },
   "keywords": [
     "mcp",
+    "mcp-server",
     "audio",
     "transcription",
-    "openrouter"
+    "openrouter",
+    "speech-to-text"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielrosehill/OR-Audio-Transcription-MCP"
+  },
+  "author": "Daniel Rosehill",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
