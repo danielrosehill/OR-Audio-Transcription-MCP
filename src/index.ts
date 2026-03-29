@@ -9,19 +9,17 @@ import * as path from "node:path";
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const SUPPORTED_MODELS = [
-  "google/gemini-2.5-flash",
-  "google/gemini-2.5-flash-lite",
-  "google/gemini-3-flash-preview",
+  "xiaomi/mimo-v2-omni",
   "google/gemini-3.1-flash-lite-preview",
-  "openai/gpt-4o-audio-preview",
+  "google/gemini-3-flash-preview",
   "openai/gpt-audio",
   "openai/gpt-audio-mini",
   "mistralai/voxtral-small-24b-2507",
-  "xiaomi/mimo-v2-omni",
-  "openrouter/healer-alpha",
+  "openai/gpt-4o-audio-preview",
 ] as const;
 
-const DEFAULT_MODEL = "google/gemini-2.5-flash";
+const DEFAULT_STANDARD_MODEL = "google/gemini-3-flash-preview";
+const DEFAULT_BUDGET_MODEL = "google/gemini-3.1-flash-lite-preview";
 
 const AUDIO_MIME_TYPES: Record<string, string> = {
   ".mp3": "audio/mpeg",
@@ -213,12 +211,19 @@ server.tool(
       .string()
       .optional()
       .describe(
-        `OpenRouter model to use for transcription. Defaults to '${DEFAULT_MODEL}'. ` +
+        `OpenRouter model to use for transcription. Defaults to '${DEFAULT_STANDARD_MODEL}'. ` +
           `Available models: ${SUPPORTED_MODELS.join(", ")}`
       ),
+    budget: z
+      .boolean()
+      .optional()
+      .describe(
+        "Use the default budget model instead of the standard model. " +
+          `Budget model: '${DEFAULT_BUDGET_MODEL}'. Ignored if 'model' is explicitly set.`
+      ),
   },
-  async ({ file_path, mode, custom_prompt, model }) => {
-    const selectedModel = model || DEFAULT_MODEL;
+  async ({ file_path, mode, custom_prompt, model, budget }) => {
+    const selectedModel = model || (budget ? DEFAULT_BUDGET_MODEL : DEFAULT_STANDARD_MODEL);
 
     let prompt: string;
     switch (mode) {
@@ -281,7 +286,11 @@ server.tool(
           text:
             `Available audio transcription models:\n\n` +
             SUPPORTED_MODELS.map(
-              (m) => `- ${m}${m === DEFAULT_MODEL ? " (default)" : ""}`
+              (m) => {
+                if (m === DEFAULT_STANDARD_MODEL) return `- ${m} (default standard)`;
+                if (m === DEFAULT_BUDGET_MODEL) return `- ${m} (default budget)`;
+                return `- ${m}`;
+              }
             ).join("\n") +
             `\n\nAll models accept audio input and produce text output via OpenRouter.`,
         },

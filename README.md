@@ -12,16 +12,13 @@ An MCP server that transcribes audio files using OpenRouter's audio-capable lang
 
 | Model | Provider |
 |-------|----------|
-| `google/gemini-2.5-flash` (default) | Google |
-| `google/gemini-2.5-flash-lite` | Google |
-| `google/gemini-3-flash-preview` | Google |
-| `google/gemini-3.1-flash-lite-preview` | Google |
-| `openai/gpt-4o-audio-preview` | OpenAI |
-| `openai/gpt-audio` | OpenAI |
-| `openai/gpt-audio-mini` | OpenAI |
-| `mistralai/voxtral-small-24b-2507` | Mistral |
+| `google/gemini-3-flash-preview` (default standard) | Google |
+| `google/gemini-3.1-flash-lite-preview` (default budget) | Google |
 | `xiaomi/mimo-v2-omni` | Xiaomi |
-| `openrouter/healer-alpha` | OpenRouter |
+| `openai/gpt-audio` | OpenAI |
+| `openai/gpt-audio-mini` (budget) | OpenAI |
+| `mistralai/voxtral-small-24b-2507` | Mistral |
+| `openai/gpt-4o-audio-preview` | OpenAI |
 
 ## Supported Audio Formats
 
@@ -69,7 +66,8 @@ Transcribe an audio file.
 | `file_path` | string | Yes | Absolute path to the audio file |
 | `mode` | `"verbatim"` \| `"cleaned"` \| `"custom"` | Yes | Transcription mode |
 | `custom_prompt` | string | When mode=custom | Custom prompt to direct the transcription |
-| `model` | string | No | OpenRouter model ID (defaults to `google/gemini-2.5-flash`) |
+| `model` | string | No | OpenRouter model ID (defaults to `google/gemini-3-flash-preview`) |
+| `budget` | boolean | No | Use budget model (`google/gemini-3.1-flash-lite-preview`). Ignored if `model` is set |
 
 ### `list_transcription_models`
 
