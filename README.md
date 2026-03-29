@@ -30,23 +30,20 @@ mp3, wav, ogg, flac, m4a, aac, webm, wma, opus
 
 Sign up at [openrouter.ai](https://openrouter.ai) and create an API key at [openrouter.ai/keys](https://openrouter.ai/keys).
 
-### 2. Install and build
+### 2. Add to Claude Code
 
-```bash
-npm install
-npm run build
-```
+Run the following command to add the MCP server to Claude Code:
 
-### 3. Configure in Claude Code
+`claude mcp add audio-transcription -e OPENROUTER_API_KEY=your-api-key-here -- npx -y or-audio-transcription-mcp`
 
-Add to your Claude Code MCP settings (`~/.claude/settings.json` or project `.mcp.json`):
+Or add it manually to your Claude Code MCP settings (`~/.claude/settings.json` or project `.mcp.json`):
 
 ```json
 {
   "mcpServers": {
     "audio-transcription": {
-      "command": "node",
-      "args": ["/path/to/OR-Audio-Transcription-MCP/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "or-audio-transcription-mcp"],
       "env": {
         "OPENROUTER_API_KEY": "your-api-key-here"
       }
@@ -54,6 +51,19 @@ Add to your Claude Code MCP settings (`~/.claude/settings.json` or project `.mcp
   }
 }
 ```
+
+### Alternative: Install from source
+
+```bash
+git clone https://github.com/danielrosehill/OR-Audio-Transcription-MCP.git
+cd OR-Audio-Transcription-MCP
+npm install
+npm run build
+```
+
+Then configure with a direct path:
+
+`claude mcp add audio-transcription -e OPENROUTER_API_KEY=your-api-key-here -- node /path/to/OR-Audio-Transcription-MCP/dist/index.js`
 
 ## Tools
 
