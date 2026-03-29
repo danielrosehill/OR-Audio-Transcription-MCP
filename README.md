@@ -1,4 +1,4 @@
-# OR Audio Transcription MCP
+# Open Router Audio Transcription MCP
 
 An MCP server that transcribes audio files using OpenRouter's audio-capable language models.
 
