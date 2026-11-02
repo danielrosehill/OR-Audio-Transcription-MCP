@@ -1,5 +1,8 @@
 # Open Router Audio Transcription MCP
 
+> **End of life (2026-11-02). No longer maintained.** Succeeded by [Transcription-Pipeline](https://github.com/danielrosehill/Transcription-Pipeline), agent skills that call the transcription APIs directly with no MCP server, plus preprocessing, cleanup, speaker labelling, reshaping, PDF and saving stages. What was carried over: [docs/prior-art.md](https://github.com/danielrosehill/Transcription-Pipeline/blob/main/docs/prior-art.md).
+
+
 An MCP server that transcribes audio files using OpenRouter's audio-capable language models.
 
 ## Features
